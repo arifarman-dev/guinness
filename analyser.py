@@ -49,7 +49,7 @@ def analyse_sentiment(comment):
 if __name__ == "__main__":
     with open('./data/stories.json', 'r', encoding='utf-8') as file:
         data = json.load(file)
-    comments = [comment['text'] for comment in data[0]['comments']]
+    comments = [comment['text'] for comment in data[0]['comments'] if 'text' in comment]
     result = {}
     for comment in comments:
         print(comment)
