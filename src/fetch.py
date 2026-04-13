@@ -15,10 +15,13 @@ def top_stories(limit=30):
         story = story_response.json()
 
         comments = []
-        for comment_id in story.get("kids", [])[:10]:
+        for comment_id in story.get("kids", []):
+            if len(comments) == 10:
+                break
             comment_response = requests.get(ITEM_URL.format(comment_id))
             comment = comment_response.json()
-            comments.append(comment)
+            if not comment.get("deleted"):
+                comments.append(comment)
         
         story["comments"] = comments
         stories.append(story)
