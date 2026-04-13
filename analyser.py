@@ -46,6 +46,17 @@ def analyse_sentiment(comment):
     except Exception as e:
         return {"error": str(e), "sentiment": "UNKNOWN"}
     
-
-result = analyse_sentiment("I love the design, but it's way too expensive for what it is.")
-print(result['sentiment'])
+if __name__ == "__main__":
+    with open('./data/stories.json', 'r', encoding='utf-8') as file:
+        data = json.load(file)
+    comments = [comment['text'] for comment in data[0]['comments']]
+    result = {}
+    for comment in comments:
+        print(comment)
+        detected_sentiment = analyse_sentiment(comment)
+        print(detected_sentiment)
+        if detected_sentiment['sentiment'] not in result:
+            result[detected_sentiment['sentiment']] = 1
+        else:
+            result[detected_sentiment['sentiment']] += 1
+    print(result)
